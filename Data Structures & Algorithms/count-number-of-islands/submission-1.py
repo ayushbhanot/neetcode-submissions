@@ -1,0 +1,24 @@
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        visit = set()
+        ROWS = len(grid)
+        COL = len(grid[0])
+        islands = 0
+
+        def dfs(r, c, visit):
+            if (r < 0 or c < 0 or r >= ROWS or c >= COL or grid[r][c] == "0" or (r,c) in visit):
+                return
+
+            if (grid[r][c] == "1" and (r,c) not in visit):
+                visit.add((r,c))
+                dfs(r+1,c, visit)
+                dfs(r-1,c, visit)
+                dfs(r,c+1, visit)
+                dfs(r,c-1, visit)
+        
+        for r in range(ROWS):
+            for c in range(COL):
+                if (grid[r][c] == "1" and (r,c) not in visit):
+                    dfs(r,c,visit)
+                    islands += 1
+        return islands
